@@ -5,58 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Composer Portfolio | 个人音乐作品集</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Import a classic serif font for that retro-minimalist feel -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="featured-page">
     <header>
         <div class="container">
             <h1>作曲/声音设计/交互艺术</h1>
             <p class="subtitle">Exploring the intersection of sound, space, and emotion.</p>
             <nav>
-                <a href="#music">音乐作品</a>
-                <a href="#interactive">交互艺术</a>
-                <a href="#sound-design">音效设计</a>
-                <a href="#notes">构思记录</a>
-            </nav>
+                <a href="music.html">音乐作品</a>
+                <a href="interactive.html">交互艺术</a>
+                <a href="sound-design.html">音效设计</a>
+                <a href="notes.html">创作构思记录</a>
         </div>
     </header>
 
     <main class="container">
-        <!-- Music Section -->
+        <!-- Music Section: Featured -->
         <section id="music" class="section">
-            <h2 class="section-title">Music Compositions / 音乐作品</h2>
+            <h2 class="section-title">Featured Music / 音乐作品</h2>
             <div class="work-grid">
                 <div class="work-item">
                     <div class="work-info">
-                        <h3>作品名称 A</h3>
-                        <p>管弦乐——《悼》/ 氛围音乐 (2023)</p>
+                        <h3>代表作品 A</h3>
+                        <p>管弦乐 / 氛围音乐 (2023)</p>
                         <audio controls src="audio/track1.mp3"></audio>
                     </div>
                     <div class="work-description">
-                        一场关于土家族神秘的祭祀仪式。
+                        探讨关于时间的非线性流动，使用了大量的弦乐铺底与随机分布的敲击乐。
                     </div>
                 </div>
-                <div class="work-item">
-                    <div class="work-info">
-                        <h3>作品名称 B</h3>
-                        <p>室内乐——《alone》/ 实验音乐 (2026)</p>
-                        <audio controls src="audio/track2.mp3"></audio>
-                    </div>
-                    <div class="work-description">
-                        一个音，在有限空间中通过各种形式发展出的生命力。
-                    </div>
-                </div>
+                <!-- 这里只保留 1-2 个最强作品 -->
+            </div>
+            <div class="view-all-container">
+                <a href="music.html" class="view-all-link">more</a>
             </div>
         </section>
 
-        <!-- Interactive Section -->
+        <!-- Interactive Section: Featured -->
         <section id="interactive" class="section">
-            <h2 class="section-title">Interactive Works / 视频音乐交互</h2>
+            <h2 class="section-title">Featured Interactive / 交互艺术</h2>
             <div class="work-grid">
                 <div class="work-item full-width">
                     <div class="media-container">
-                        <!-- Placeholder for a video embed -->
                         <div class="video-placeholder">
                             <span>视频作品预览 (YouTube/Vimeo Embed)</span>
                         </div>
@@ -70,11 +61,14 @@
                     </div>
                 </div>
             </div>
+            <div class="view-all-container">
+                <a href="interactive.html" class="view-all-link">more</a>
+            </div>
         </section>
 
-        <!-- Sound Design Section -->
+        <!-- Sound Design Section: Featured -->
         <section id="sound-design" class="section">
-            <h2 class="section-title">Sound Design / 音效设计</h2>
+            <h2 class="section-title">Featured Sound Design / 音效设计</h2>
             <div class="work-grid">
                 <div class="work-item">
                     <div class="work-info">
@@ -87,31 +81,31 @@
                     </div>
                 </div>
             </div>
+            <div class="view-all-container">
+                <a href="sound-design.html" class="view-all-link">more</a>
+            </div>
         </section>
 
-        <!-- Notes Section -->
+        <!-- Notes Section: Featured -->
         <section id="notes" class="section">
-            <h2 class="section-title">Creative Notes / 创作构思记录</h2>
+            <h2 class="section-title">Featured Notes / 创作构思记录</h2>
             <div class="notes-container">
                 <article class="note-item">
-                    <span class="note-date">2026.06.12</span>
+                    <span class="note-date">2024.05.12</span>
                     <h3>关于“数学摇滚”在管弦乐中的节奏映射</h3>
                     <p>试图将 7/8 拍的切分律动通过木管乐器的交替吹奏来实现，这种不稳定性为古典形式带来了现代的焦虑感...</p>
-                    <a href="notes/math-rock.html" class="read-more">阅读全文 $\rightarrow$</a>
+                    <a href="notes/math-rock.html" class="read-more">阅读全文 </a>
                 </article>
-                <article class="note-item">
-                    <span class="note-date">2024.03.20</span>
-                    <h3>声音采集计划：城市噪音的律动化</h3>
-                    <p>在地铁站记录了 4 小时的环境音，尝试提取其中的循环周期并将其转化为打击乐样本...</p>
-                    <a href="notes/urban-noise.html" class="read-more">阅读全文 $\rightarrow$</a>
-                </article>
+            </div>
+            <div class="view-all-container">
+                <a href="notes.html" class="view-all-link">more</a>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Composer Portfolio. Designed with retro-minimalism.</p>
+            <p>&copy; 2026 Composer Portfolio. Designed with Jzh.</p>
         </div>
     </footer>
 </body>
