@@ -6,9 +6,6 @@
     <title>Composer Portfolio | 个人音乐作品集</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@xizeyoupan/meting@latest/dist/Meting.min.js"></script>
 </head>
 <body class="featured-page">
     <header>
@@ -30,14 +27,11 @@
             <div class="work-grid">
                 <div class="work-item">
                     <div class="work-info">
-                           <h3>悼_Orchestral</h3>
+                        <h3>悼_Orchestral</h3>
                         <p> 2021.6</p>
-                        <meting-js 
-                        server="netease" 
-                        type="song" 
-                        id="3442338546" 
-                        api="https://meting.elysium-stack.cn/api?server=:server&type=:type&id=:id">
-                       </meting-js>
+                        <audio controls src="audio/dao_orchestral.mp3"></audio>
+                    </div>
+                    </div>
                     <div class="work-description">
                         《悼》借由西方管弦乐的宏大织体与中国湘西土家族音乐灵魂的深度碰撞。
                     </div>
@@ -55,7 +49,7 @@
             <div class="work-grid">
                 <div class="work-item full-width">
                     <div class="media-container">
-                            <meting-js server="netease" type="song" id="3442338546"></meting-js>
+                            <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=117341794931004&bvid=BV12jah6yEGi&cid=42243002043&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 100%; height: 100%; border: none;"></iframe>
                     </div>
                     <div class="work-info">
                         <h3>肆意 C</h3>
