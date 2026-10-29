@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
     <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@xizeyoupan/meting@latest/dist/Meting.min.js"></script>
 </head>
 <body class="featured-page">
     <header>
@@ -32,11 +32,12 @@
                     <div class="work-info">
                            <h3>悼_Orchestral</h3>
                         <p> 2021.6</p>
-                        <div class="music-player-container">
-                        <meting-js server="netease" type="song" id="3442338546"></meting-js>
-                        <a href="https://music.163.com/#/song?id=3442338546" target="_blank" class="music-fallback">在网易云音乐播放 →</a>
-                    </div>
-                    </div>
+                        <meting-js 
+                       server="netease" 
+                      type="song" 
+                      id="3442338546" 
+                      api="https://meting.qjqq.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r">
+                       </meting-js>
                     <div class="work-description">
                         《悼》借由西方管弦乐的宏大织体与中国湘西土家族音乐灵魂的深度碰撞。
                     </div>
