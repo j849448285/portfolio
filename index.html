@@ -6,6 +6,10 @@
     <title>Composer Portfolio | 个人音乐作品集</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <!-- 1. 引入 APlayer 样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 </head>
 <body class="featured-page">
     <header>
@@ -30,7 +34,13 @@
                         <h3>悼_Orchestral</h3>
                         <p> 2021.6</p>
                         <div class="music-player-container">
-                        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=3445099325&auto=1&height=66"></iframe>
+                        <meting-js
+                        server="netease"
+                        type="song"
+                        id="3445099325"
+                        theme="#333333" 
+                        autoplay="false">
+                        </meting-js>
                     </div>
                     </div>
                     <div class="work-description">
