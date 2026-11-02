@@ -6,6 +6,11 @@
     <title>Composer Portfolio | 个人音乐作品集</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<!-- 2. 引入 APlayer 脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- 3. 引入 MetingJS 脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 </head>
 <body class="featured-page">
     <header>
@@ -29,7 +34,11 @@
                     <div class="work-info">
                         <h3>悼_Orchestral</h3>
                         <p> 2021.6</p>
-                        <audio controls src="audio/dao_orchestral.mp3"></audio>
+                        <meting-js
+                        server="netease"
+                        type="song"
+                        id="3445099325">
+                        </meting-js>
                     </div>
                     </div>
                     <div class="work-description">
