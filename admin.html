@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Studio · 内容管理</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body { background-color: #f9f8f5; }
+        .admin-container { max-width: 760px; margin: 60px auto; padding: 0 40px; }
+        .admin-container h1 { font-size: 1.8rem; margin-bottom: 6px; }
+        .admin-sub { color: #888; font-size: 0.9rem; margin-bottom: 40px; }
+        .tabs { display: flex; gap: 4px; border-bottom: 1px solid #d1d1d1; margin-bottom: 34px; flex-wrap: wrap; }
+        .tabs button {
+            background: none; border: none; padding: 10px 16px; cursor: pointer;
+            font-family: inherit; font-size: 0.95rem; color: #888; border-bottom: 2px solid transparent;
+        }
+        .tabs button.active { color: #000; border-bottom-color: #5e5e5e; }
+        .panel { display: none; }
+        .panel.active { display: block; }
+        .field { margin-bottom: 18px; }
+        .field label { display: block; font-size: 0.85rem; color: #5e5e5e; margin-bottom: 6px; }
+        .field input[type=text], .field input[type=password], .field textarea, .field select {
+            width: 100%; padding: 10px 12px; border: 1px solid #d1d1d1; background: #fff;
+            font-family: inherit; font-size: 0.95rem; color: #333; box-sizing: border-box;
+        }
+        .field textarea { min-height: 90px; resize: vertical; }
+        .field textarea.md { min-height: 220px; font-family: ui-monospace, Menlo, monospace; font-size: 0.88rem; }
+        .field input:focus, .field textarea:focus { outline: none; border-color: #5e5e5e; }
+        .row { display: flex; gap: 14px; }
+        .row .field { flex: 1; }
+        .btn {
+            display: inline-block; padding: 10px 22px; background: #1c1c1c; color: #f9f8f5;
+            border: none; cursor: pointer; font-family: inherit; font-size: 0.92rem; transition: opacity .2s;
+        }
+        .btn:hover { opacity: 0.82; }
+        .btn.ghost { background: none; color: #5e5e5e; border: 1px solid #d1d1d1; }
+        .btn.danger { background: none; color: #8a2c2c; border: 1px solid #d9b3b3; }
+        .btn:disabled { opacity: .4; cursor: default; }
+        .hint { font-size: 0.82rem; color: #999; margin-top: 6px; }
+        .status { margin-top: 22px; padding: 12px 16px; font-size: 0.9rem; display: none; line-height: 1.6; }
+        .status.ok { display: block; background: #eef2ea; color: #3c5c34; }
+        .status.err { display: block; background: #f5ecec; color: #8a2c2c; }
+        .status.info { display: block; background: #efede8; color: #5e5e5e; }
+        .preview-box { border: 1px solid #d1d1d1; background: #fff; padding: 16px; margin-bottom: 18px; min-height: 60px; }
+        .preview-box:empty { display: none; }
+        .preview-box .md-body { font-size: 0.98rem; line-height: 1.8; color: #333; }
+        .preview-box .md-body h2 { font-size: 1.3rem; margin: 26px 0 14px; color: #000; }
+        .preview-box .md-body p { margin-bottom: 16px; }
+        .preview-box .md-body blockquote {
+            background: #efede8; padding: 16px; border-left: 4px solid #5e5e5e; margin: 22px 0; font-style: italic;
+        }
+        .manage-list { list-style: none; padding: 0; margin: 0; }
+        .manage-list li {
+            display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e5e2da;
+        }
+        .manage-list .m-title { flex: 1; font-size: 0.95rem; }
+        .manage-list .m-meta { color: #999; font-size: 0.8rem; }
+        .editing-banner {
+            display: none; background: #efede8; padding: 10px 14px; margin-bottom: 18px;
+            font-size: 0.88rem; color: #5e5e5e;
+        }
+        .editing-banner button { float: right; background: none; border: none; color: #8a2c2c; cursor: pointer; font-family: inherit; }
+        /* 锁屏 */
+        #lockscreen {
+            max-width: 380px; margin: 18vh auto; padding: 40px; text-align: center;
+            border: 1px solid #d1d1d1; background: #fff;
+        }
+        #lockscreen h2 { font-size: 1.4rem; margin-bottom: 8px; }
+        #lockscreen p { color: #888; font-size: 0.88rem; margin-bottom: 24px; }
+        #lockscreen input {
+            width: 100%; padding: 10px 12px; border: 1px solid #d1d1d1; text-align: center;
+            font-family: inherit; font-size: 1rem; box-sizing: border-box; margin-bottom: 14px;
+        }
+        .hidden { display: none !important; }
+        .checkline { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: #5e5e5e; }
+        .checkline input { width: auto; }
+        .section-gap { margin-top: 34px; }
+    </style>
+</head>
+<body>
+
+<!-- 门禁 -->
+<div id="lockscreen">
+    <h2 class="serif">内容管理</h2>
+    <p>工作室入口 · 仅限管理者</p>
+    <input type="password" id="lock-pass" placeholder="输入管理密码" autocomplete="off">
+    <button class="btn" id="lock-btn" style="width:100%">进 入</button>
+    <p class="hint" id="lock-err" style="color:#8a2c2c;"></p>
+</div>
+
+<!-- 主界面 -->
+<div class="admin-container hidden" id="admin">
+    <h1 class="serif">内容管理</h1>
+    <p class="admin-sub">新增内容在保存后置于列表最上方 · 「featured」勾选决定是否出现在首页精选</p>
+
+    <div class="tabs" id="tabs">
+        <button data-tab="music" class="active">音乐</button>
+        <button data-tab="video">视频</button>
+        <button data-tab="note">随笔</button>
+        <button data-tab="manage">管理</button>
+        <button data-tab="settings">钥匙</button>
+    </div>
+
+    <!-- 音乐 -->
+    <div class="panel active" id="panel-music">
+        <div class="editing-banner" id="banner-music">
+            正在编辑已有曲目 <button data-cancel="music">取消编辑</button>
+        </div>
+        <div class="field">
+            <label>网易云链接或歌曲 ID</label>
+            <div class="row">
+                <input type="text" id="music-url" placeholder="https://music.163.com/song?id=xxxxxx 或直接输入 ID">
+                <button class="btn ghost" id="music-parse" style="flex:none">解析 →</button>
+            </div>
+            <p class="hint">网页播放器地址、分享短链接、纯数字 ID 均可</p>
+        </div>
+        <div id="music-preview" class="preview-box"></div>
+        <div class="row">
+            <div class="field">
+                <label>标题</label>
+                <input type="text" id="music-title">
+            </div>
+            <div class="field" style="max-width:160px">
+                <label>创作年月（如 2024.6）</label>
+                <input type="text" id="music-year">
+            </div>
+        </div>
+        <div class="field">
+            <label>作品说明</label>
+            <textarea id="music-desc"></textarea>
+        </div>
+        <div class="field checkline">
+            <input type="checkbox" id="music-featured" checked>
+            <label for="music-featured" style="margin:0">显示在首页精选</label>
+        </div>
+        <button class="btn" id="music-publish">发布更新</button>
+    </div>
+
+    <!-- 视频 -->
+    <div class="panel" id="panel-video">
+        <div class="editing-banner" id="banner-video">
+            正在编辑已有视频 <button data-cancel="video">取消编辑</button>
+        </div>
+        <div class="field">
+            <label>B站视频链接 或 官方分享的嵌入 iframe 代码</label>
+            <div class="row">
+                <input type="text" id="video-url" placeholder="https://www.bilibili.com/video/BVxxxx 或粘贴 <iframe …> 代码">
+                <button class="btn ghost" id="video-parse" style="flex:none">解析 →</button>
+            </div>
+            <p class="hint">若自动解析失败，请到视频「分享 → 嵌入代码」，把整段 iframe 代码粘贴进来（内含 aid/cid，最可靠）</p>
+        </div>
+        <div id="video-preview" class="preview-box"></div>
+        <div class="row">
+            <div class="field">
+                <label>标题</label>
+                <input type="text" id="video-title">
+            </div>
+            <div class="field">
+                <label>分类标签（如 实验音乐/ 2024.6）</label>
+                <input type="text" id="video-category">
+            </div>
+        </div>
+        <div class="field">
+            <label>作品说明</label>
+            <textarea id="video-desc"></textarea>
+        </div>
+        <div class="row">
+            <div class="field" style="max-width: 240px;">
+                <label>归属栏目</label>
+                <select id="video-group">
+                    <option value="interactive">短片配乐（interactive.html）</option>
+                    <option value="sound">音效设计（sound-design.html）</option>
+                </select>
+            </div>
+            <div class="field checkline" style="align-self:flex-end; padding-bottom: 22px;">
+                <input type="checkbox" id="video-featured" checked>
+                <label for="video-featured" style="margin:0">显示在首页精选</label>
+            </div>
+        </div>
+        <button class="btn" id="video-publish">发布更新</button>
+    </div>
+
+    <!-- 随笔 -->
+    <div class="panel" id="panel-note">
+        <div class="editing-banner" id="banner-note">
+            正在编辑已有随笔 <button data-cancel="note">取消编辑</button>
+        </div>
+        <div class="field">
+            <label>标题</label>
+            <input type="text" id="note-title">
+        </div>
+        <div class="row">
+            <div class="field">
+                <label>网址代号 slug（自动生成，可改；仅小写字母/数字/连字符）</label>
+                <input type="text" id="note-slug">
+            </div>
+            <div class="field" style="max-width:170px">
+                <label>日期</label>
+                <input type="text" id="note-date" placeholder="2024.05.12">
+            </div>
+        </div>
+        <div class="field">
+            <label>分类标签（如 理论探索 / 节奏研究）</label>
+            <input type="text" id="note-category">
+        </div>
+        <div class="field">
+            <label>列表摘要（列表页显示的一句话）</label>
+            <textarea id="note-desc" style="min-height:60px"></textarea>
+        </div>
+        <div class="field">
+            <label>正文（Markdown）</label>
+            <textarea id="note-body" class="md" placeholder="## 小标题&#10;&#10;正文段落……&#10;&#10;> 引用框：这一行会显示为文章中的高亮框"></textarea>
+            <p class="hint">支持 Markdown：## 小标题、**加粗**、> 引用框（渲染为文中的高亮方框，与已发布的两篇文章样式一致）</p>
+        </div>
+        <div class="field checkline">
+            <input type="checkbox" id="note-featured">
+            <label for="note-featured" style="margin:0">显示在首页精选</label>
+        </div>
+        <div class="field">
+            <label style="color:#999">实时预览</label>
+            <div class="preview-box" id="note-preview"></div>
+        </div>
+        <button class="btn" id="note-publish">发布更新</button>
+    </div>
+
+    <!-- 管理 -->
+    <div class="panel" id="panel-manage">
+        <p class="hint" style="margin-bottom: 18px;">以下条目来自线上 <code>content.json</code>。点「编辑」载入到对应标签页修改；「删除」需二次确认。改动即时发布。</p>
+        <h3 class="serif" style="font-size: 1.1rem; margin: 18px 0 6px;">音乐</h3>
+        <ul class="manage-list" id="manage-music"></ul>
+        <h3 class="serif" style="font-size: 1.1rem; margin: 18px 0 6px;">视频</h3>
+        <ul class="manage-list" id="manage-video"></ul>
+        <h3 class="serif" style="font-size: 1.1rem; margin: 18px 0 6px;">随笔</h3>
+        <ul class="manage-list" id="manage-note"></ul>
+        <button class="btn ghost" id="manage-refresh" style="margin-top: 20px;">↻ 从线上刷新</button>
+    </div>
+
+    <!-- 钥匙 -->
+    <div class="panel" id="panel-settings">
+        <div class="field">
+            <label>GitHub 访问令牌（PAT）</label>
+            <input type="password" id="set-token" placeholder="github_pat_… / ghp_…">
+            <p class="hint">只保存在此浏览器本地（localStorage），不会出现在任何网页代码里。令牌泄露或换机器时可在 GitHub 设置中随时吊销重发。</p>
+        </div>
+        <div class="row">
+            <div class="field">
+                <label>仓库名（owner/repository 的 repository 部分）</label>
+                <input type="text" id="set-repo" value="portfolio">
+            </div>
+            <div class="field" style="max-width: 170px;">
+                <label>分支</label>
+                <input type="text" id="set-branch" value="main">
+            </div>
+        </div>
+        <button class="btn" id="set-save">保存并测试</button>
+        <button class="btn danger" id="set-clear">清除本机令牌</button>
+        <div class="status" id="set-status"></div>
+        <div class="section-gap hint">
+            发布成功后，GitHub Pages 约需 1 分钟完成部署；可在
+            <a href="https://github.com/j849448285/portfolio/actions" target="_blank" rel="noopener" style="color:#5e5e5e">仓库 Actions 页</a>
+            查看部署进度。
+        </div>
+    </div>
+
+    <div class="status" id="global-status"></div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>

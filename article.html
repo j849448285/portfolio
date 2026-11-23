@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创作笔记 - Composer_降噪</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #f9f8f5; }
+        .article-container {
+            max-width: 700px;
+            margin: 80px auto;
+            padding: 0 40px;
+        }
+        .article-header {
+            margin-bottom: 60px;
+            border-bottom: 1px solid #d1d1d1;
+            padding-bottom: 30px;
+        }
+        .article-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .meta {
+            color: #888;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 20px;
+        }
+        .article-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #333;
+        }
+        .article-body h2 {
+            font-size: 1.5rem;
+            margin: 40px 0 20px 0;
+            color: #000;
+        }
+        .article-body p {
+            margin-bottom: 20px;
+        }
+        /* 管理后台用 Markdown 发布的随笔：> 引用块 → 原有高亮框样式 */
+        .article-body blockquote {
+            background-color: #efede8;
+            padding: 20px;
+            border-left: 4px solid #5e5e5e;
+            margin: 30px 0;
+            font-style: italic;
+        }
+        .article-body ul, .article-body ol { margin: 0 0 20px 0; padding-left: 24px; }
+        .article-body li { margin-bottom: 8px; }
+        .article-body img { max-width: 100%; }
+        .article-body pre {
+            background-color: #efede8;
+            padding: 16px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 40px;
+            text-decoration: none;
+            color: #888;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #000; }
+        .article-not-found {
+            color: #888;
+            padding: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <a href="notes.html" class="back-link">← 返回创作构思记录</a>
+
+        <header class="article-header">
+            <h1 id="article-title">…</h1>
+            <div class="meta">
+                <span id="article-date"></span>
+                <span id="article-category"></span>
+            </div>
+        </header>
+
+        <article class="article-body" id="article-body">
+            <p class="article-not-found">正在加载…</p>
+        </article>
+    </div>
+
+    <script src="content.js"></script>
+    <script>
+    (function () {
+        var slug = new URLSearchParams(window.location.search).get('slug');
+        Portfolio.load().then(function (data) {
+            var hit = null;
+            (data.notes || []).forEach(function (n) { if (n.slug === slug) hit = n; });
+            if (!hit) {
+                document.title = '未找到文章 - Composer_降噪';
+                document.getElementById('article-title').textContent = '未找到这篇文章';
+                document.getElementById('article-date').textContent = '';
+                document.getElementById('article-category').textContent = '';
+                document.getElementById('article-body').innerHTML =
+                    '<p class="article-not-found">内容可能已被移动或删除。← <a href="notes.html" style="color:#5e5e5e;">返回列表</a></p>';
+                return;
+            }
+            document.title = hit.title + ' - 创作笔记';
+            document.getElementById('article-title').textContent = hit.title;
+            document.getElementById('article-date').textContent = '发布日期：' + hit.date;
+            document.getElementById('article-category').textContent = '分类：' + hit.category;
+            document.getElementById('article-body').innerHTML = hit.body || '';
+        }).catch(function (e) {
+            document.getElementById('article-body').textContent = '数据加载失败：' + e.message;
+        });
+    })();
+    </script>
+</body>
+</html>
