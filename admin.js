@@ -8,7 +8,7 @@
   var OWNER = 'j849448285';
   var REPO_DEFAULT = 'portfolio';
   var BRANCH_DEFAULT = 'main';
-  var ADMIN_PASS_SHA256 = '9d44084c7cb99ae42dc09b541ea40dc177a286378830bcf482d0d01e680710db';
+  var ADMIN_PASS_SHA256 = 'b0f6e5ac96c9cd88529a74df8dc0e656e8c2d3607cd6a419925c9469cdf10bb0';
   var LS = { ok: 'jzh_admin_ok', token: 'jzh_gh_token', repo: 'jzh_gh_repo', branch: 'jzh_gh_branch' };
 
   /* 全站数据缓存（编辑/删除时在此对象上改，发布时整体写回） */
@@ -40,7 +40,9 @@
   function hasToken() { return !!localStorage.getItem(LS.token); }
 
   async function gh(path, opts) {
-    var headers = { 'Accept': 'application/vnd.github+json', 'Authorization': 'Bearer ' + localStorage.getItem(LS.token) };
+    var headers = { 'Accept': 'application/vnd.github+json' };
+    var _tok = localStorage.getItem(LS.token);
+    if (_tok) headers['Authorization'] = 'Bearer ' + _tok;
     if (opts && opts.body) headers['Content-Type'] = 'application/json';
     var res = await fetch('https://api.github.com/repos/' + repoFull() + path, {
       method: (opts && opts.method) || 'GET',
